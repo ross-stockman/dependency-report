@@ -17,10 +17,13 @@
         <java.version>23</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <dependencies>${dependencies}</dependencies>
-        <report>${report}</report>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.apache.maven.resolver</groupId>
+            <artifactId>maven-resolver-api</artifactId>
+            <version>2.0.5</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -36,19 +39,28 @@
             <version>5.3.0</version>
         </dependency>
     </dependencies>
-    <build>
-        <finalName>dependency-report</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <arguments>
-                        <argument>${dependencies}</argument>
-                        <argument>${report}</argument>
-                    </arguments>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <profiles>
+        <profile>
+            <id>report</id>
+            <properties>
+                <dependencies>${dependencies}</dependencies>
+                <report>${report}</report>
+            </properties>
+            <build>
+                <finalName>dependency-report</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <configuration>
+                            <arguments>
+                                <argument>${dependencies}</argument>
+                                <argument>${report}</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

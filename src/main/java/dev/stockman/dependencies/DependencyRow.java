@@ -15,4 +15,14 @@ public record DependencyRow(Dependency dependency, boolean[] matrix) implements 
         }
         return String.format("%s,%s,%s,%s,%s,%s", dependency.groupId(), dependency.artifactId(), dependency.version(), dependency.packageType(), dependency.scope(), matrixString);
     }
+    public static DependencyRow merge(Dependency a, boolean[] matrixA, boolean[] matrixB) {
+        if (matrixA.length != matrixB.length) {
+            throw new IllegalArgumentException("Matrix lengths must be equal");
+        }
+        boolean[] matrix = new boolean[matrixA.length];
+        for (int i = 0; i < matrixA.length; i++) {
+            matrix[i] = matrixA[i] || matrixB[i];
+        }
+        return new DependencyRow(a, matrix);
+    }
 }

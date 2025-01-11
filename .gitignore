@@ -38,3 +38,4 @@ build/
 ### project specific
 /workspace/*
 !/workspace/README.md
+generate-dependency-report-test.sh

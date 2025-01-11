@@ -43,15 +43,15 @@ generate_dependency_report() {
   done
 }
 
-#generate_vulnerability_report() {
-#  local project_dir=$1
-#  local project_name=$(basename $project_dir)
-#
-#  echo "Processing project: $project_name"
-#
-#  # Run the Maven dependency check report
-#  mvn -f $project_dir/pom.xml org.owasp:dependency-check-maven:check -Dformat=JSON -q
-#}
+generate_vulnerability_report() {
+  local project_dir=$1
+  local project_name=$(basename $project_dir)
+
+  echo "Processing project: $project_name"
+
+  # Run the Maven dependency check report
+  mvn -f $project_dir/pom.xml org.owasp:dependency-check-maven:check -Dformat=JSON -q
+}
 
 # Iterate through each Maven project directory and generate the report
 for project_dir in $PROJECTS_DIR/*; do
@@ -74,6 +74,6 @@ echo "Dependency CSV report generated: $REPORT_FILE"
 
 echo "Generating final output report..."
 
-mvn spring-boot:run -Ddependencies="$REPORT_FILE" -Dreport="$REPORT_FILE_XLSX" -q -f $SCRIPT_DIR/pom.xml
+mvn spring-boot:run -Ddependencies="$REPORT_FILE" -Dreport="$REPORT_FILE_XLSX" -q -f $SCRIPT_DIR/pom.xml -P report
 
 echo "Dependency XLSX report generated: $REPORT_FILE_XLSX"
