@@ -20,11 +20,6 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.apache.maven.resolver</groupId>
-            <artifactId>maven-resolver-api</artifactId>
-            <version>2.0.5</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
@@ -38,12 +33,17 @@
             <artifactId>poi-ooxml</artifactId>
             <version>5.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
             <id>report</id>
             <properties>
                 <dependencies>${dependencies}</dependencies>
+                <owasp>${owasp}</owasp>
                 <report>${report}</report>
             </properties>
             <build>
@@ -55,6 +55,7 @@
                         <configuration>
                             <arguments>
                                 <argument>${dependencies}</argument>
+                                <argument>${owasp}</argument>
                                 <argument>${report}</argument>
                             </arguments>
                         </configuration>
